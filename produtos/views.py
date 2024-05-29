@@ -42,3 +42,21 @@ def deletar(request, id):
     produto.delete()
 
     return redirect("/produtos/listar/")
+
+def alterar(request, id):
+    if request.method == 'GET':
+        produto = Produto.objects.get(id=id)
+        return render(request, 'alterar.html', {'produto': produto})
+    if request.method == 'POST':
+        nome_produto = request.POST.get('produto')
+        preco = request.POST.get('preco')
+
+        produto = Produto.objects.get(id=id)
+
+        produto.nome_produto = nome_produto
+        produto.preco_produto = preco
+
+        produto.save()
+
+        return redirect(listar)
+
